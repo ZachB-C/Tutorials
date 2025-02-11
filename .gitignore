@@ -1,2 +1,8 @@
-Tutorials/git/*.png
+Tutorials/git/*.png      # Ignore all png files
+!Tutorials/git/final.png # Except for the one called final.png
+
+Tutorials/git/log_*
+
+**/*.csv # To ignore all files with ending csv anywhere in the directory
+
 Tutorials/git/receipts/
