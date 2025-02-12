@@ -1,3 +1,6 @@
+**/*.*~
+# Ignores the temporary files made by Vim
+
 Tutorials/git/*.png   
 # Ignore all png files. This one does not appear to be working and I am nore sure why.
 !Tutorials/git/final.png 
