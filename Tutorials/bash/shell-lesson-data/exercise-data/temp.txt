@@ -1,0 +1,6 @@
+creatures/basilisk.dat
+creatures/minotaur.dat
+creatures/original-basilisk.dat
+creatures/original-minotaur.dat
+creatures/original-unicorn.dat
+creatures/unicorn.dat
