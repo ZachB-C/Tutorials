@@ -1,0 +1,9 @@
+ 1164  gcc q1.cpp -o test.exe; test.exe
+ 1165  gcc q1.cpp -o -Werror -Wpedantic -pedantic-errors -Wall test.exe; test.exe
+ 1166  gcc q1.cpp -o -Werror -Wpedantic -pedantic-errors -Wall -Wextra -Wabi -Wno-change-meanings test.exe; test.exe
+ 1171  history 100 | grep gcc
+ 1172  history 100 | grep gcc | foot 1
+ 1173  history 100 | grep gcc | head1
+ 1174  history 100 | grep gcc | head 1
+ 1175  history 100 | grep gcc > head 1
+ 1176  history 100 | grep gcc >> head 

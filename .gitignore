@@ -13,3 +13,7 @@ Tutorials/git/log_*
 # To ignore all files with ending csv anywhere in the directory
 
 Tutorials/git/receipts/
+
+# Ignore executables and temporary files
+*.exe
+*.swp

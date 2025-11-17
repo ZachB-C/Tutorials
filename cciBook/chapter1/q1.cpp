@@ -7,27 +7,78 @@
 // Header files
 #include <iostream>
 #include <unordered_map>
-
+#include <string>
 
 // Helper functions
+std::string sortString( std::string input_string);
+std::string mergeStrings( std::string input_string1, std::string input_string2);
+bool isUnique(std::string input_string); // Checks all characters (except space) in string are unique.
+bool isUniqueStr(std::string input_string);  // Checks all characters (except space) in string are unique.
+// Does not use hash functions.
+
+
+
 // Should default to zero if we wish to default to
-// another value need to define struct e.g.
+// another value needed to define struct e.g.
 struct CountInt{
 	int count = 0;
 };
+
+// main() function to implement
+int main() {
+	std::string test_string = "Hello World 1";
+	std::cout << test_string << '\n';
+	std::string sorted_string = sortString(test_string);
+	std::cout << "Sorted: " << sorted_string << '\n';
+	bool success = isUnique(test_string);
+	bool success_2 = isUniqueStr(test_string);
+
+	if (success == true) {
+		std::cout<<"Unique\n";
+	}
+	else {
+		std::cout<<"Not Unique\n";
+	}
+	if (success_2 == true) {
+		std::cout<<"UniqueStr\n";
+	}
+	else {
+		std::cout<<"Not UniqueStr\n";
+	}
+
+	test_string = "Hey World 1";
+	std::cout << test_string << '\n';
+	std::cout << "Sorted: " 
+		<< sortString(test_string) << '\n';
+	success = isUnique(test_string);
+	success_2 = isUniqueStr(test_string);
+	if (success == true) {
+		std::cout<<"Unique\n";
+	}
+	else {
+		std::cout<<"Not Unique\n";
+	}
+	if (success_2 == true) {
+		std::cout<<"UniqueStr\n";
+	}
+	else {
+		std::cout<<"Not UniqueStr\n";
+	}
+	return 0;
+}
 // But for this problem could just use int as should 
 // default to the correct value
-bool is_unique(std::string test_string) {
+bool isUnique(std::string input_string) {
 	std::unordered_map<char, CountInt> ch_counts;
 
-	for (char ch : test_string) {
+	for (char ch : input_string) {
 		// Increment the count and then check if 
-		// it is greater than 1 if so exist
+		// it is greater than 1 if so it exists
 		if ((++(ch_counts[ch].count) > 1)
 			&& (ch != ' ')) {
-			std::cout<<ch<<": "
+			std::cout<<", "<<ch<<" repeats ("
 				<<ch_counts[ch].count
-				<<"\n";
+				<<")\n";
 			return false;
 		} else {
 			std::cout<<ch;
@@ -38,74 +89,67 @@ bool is_unique(std::string test_string) {
 
 }
 
-// This is very inefficient should find a better scaling
-// sorter.
-std::string string_sorter(std::string input_string) {
-	std::string sorted_string = "";
-	std::cout << sorted_string << "\n";
-	bool found = false;
-	// Initialise sorted character as 'a' in case 
-	// we deal with an empty list.
-	for (char ch : input_string) {
-		found = false;
-		for ( char s_ch : sorted_string ) {
-			if ( ch < s_ch ) 
-			{
-				sorted_string = (
-					ch + sorted_string
-					);
-				found = true;
-				break;
-			}
-		}
-		if ( found == false) {
-			sorted_string = sorted_string + ch;
-		}
+
+
+// implement a merge sort or quick sort, I think I will
+// do merge sort.
+std::string sortString(std::string input_string) {
+	size_t string_length = input_string.length();
+	if ( string_length <= 1 ) {
+		return input_string;
+	} else {
+		return mergeStrings( 	
+				sortString(input_string.substr(0, string_length/2)),
+				sortString(input_string.substr(string_length/2 ))
+			);
+		// Using only the start position goes until the end of the string.			
 	}
-	
-
-
-	return sorted_string;
 }
 
-bool is_unique_str(std::string test_string) {
-	std::string sorted_string = string_sorter(
+
+std::string mergeStrings(std::string string1, std::string string2) {
+	std::string merged_string = "";
+	size_t length1 = string1.length();
+	size_t length2 = string2.length();
+	size_t i1 = 0;
+	size_t i2 = 0;
+	// Merge until all of one string is used up.
+	while ( i1 < length1 && i2 < length2 ) {
+		if( string1[i1] < string2[i2] ) {
+			merged_string = merged_string + string1[i1];
+			i1++;
+		} else {
+			merged_string = merged_string + string2[i2];
+			i2++;
+		}
+	}
+//	std::cout << "First stage " << i1 << ' ' << i2  << ' ' << length1  << ' ' << length2 << '\n';
+	// Append the remaining string to the merged string.
+	if( i1 < length1 ) {
+		merged_string = merged_string + string1.substr(i1);
+	} else if ( i2 < length2 ) {
+		merged_string = merged_string + string2.substr(i2);
+	}
+
+	return merged_string;
+}
+
+bool isUniqueStr(std::string test_string) {
+	std::string sorted_string = sortString(
 			test_string);
-	std::cout << "Sorted: " << sorted_string << "\n";
+//	std::cout << "Sorted: " << sorted_string << "\n";
 	bool first = true;
+	char prev_ch = sorted_string[0];
 	for( char ch : sorted_string ) {
 		if( first ) {
-			char prev_ch = ch;
+			first = false;
 			continue;
-		} elif( prev_ch == ch && ch != ' ') {
+		} else if( prev_ch == ch && ch != ' ') {
 			return false;
+		} else {
+			prev_ch = ch;
 		}		
 	}
 	return true;
 }
 
-// main() function to implement
-int main() {
-	std::string test_string = "Hello World 1";
-	std::cout << test_string << '\n';
-	bool success = is_unique(test_string);
-	bool success_2 = is_unique_str(test_string);
-	std::cout << success_2 << std::endl;
-	if (success == true) {
-		std::cout<<"Unique\n";
-	}
-	else {
-		std::cout<<"Not Unique\n";
-	}
-	
-	test_string = "Hey World 1";
-	std::cout << test_string << '\n';
-	success = is_unique(test_string);
-	if (success == true) {
-		std::cout<<"Unique\n";
-	}
-	else {
-		std::cout<<"Not Unique\n";
-	}
-	return 0;
-}
