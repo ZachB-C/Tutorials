@@ -18,3 +18,7 @@
 	// Investigate stack objects, I guess it is similar to linked list.
 	//
 	// Difference between stack and heap.
+	//
+	//
+	//
+	// Revise makefiles.
